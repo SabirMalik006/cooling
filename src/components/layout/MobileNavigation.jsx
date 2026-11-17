@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 import { siteConfig } from '../../data/siteConfig';
 import Button from '../ui/Button';
@@ -14,6 +15,14 @@ const itemVariants = {
 };
 
 export default function MobileNavigation({ open, onClose, activeHref }) {
+  const navigate = useNavigate();
+
+  const goTo = (href) => (event) => {
+    event.preventDefault();
+    onClose();
+    navigate(href);
+  };
+
   return (
     <AnimatePresence>
       {open && (
@@ -47,16 +56,16 @@ export default function MobileNavigation({ open, onClose, activeHref }) {
             variants={listVariants}
             initial="hidden"
             animate="show"
-            className="mt-12 flex flex-col gap-1"
+            className="mt-8 flex max-h-[58vh] flex-col gap-1 overflow-y-auto"
           >
             {siteConfig.navigation.map((item, index) => (
               <motion.a
                 key={item.href}
                 href={item.href}
                 variants={itemVariants}
-                onClick={onClose}
+                onClick={goTo(item.href)}
                 data-active={activeHref === item.href}
-                className="group flex items-baseline gap-4 border-b border-white/10 py-4 font-display text-[1.75rem] font-bold tracking-mega text-white"
+                className="group flex items-baseline gap-4 border-b border-white/10 py-3 font-display text-[1.4rem] font-bold tracking-mega text-white"
               >
                 <span className="text-[0.65rem] font-semibold text-iso-orange">
                   {String(index + 1).padStart(2, '0')}

@@ -1,11 +1,11 @@
-﻿import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from '../../animations/gsap';
 import useReveals from '../../animations/useReveals';
 import useReducedMotion from '../../hooks/useReducedMotion';
 import { testimonials, reviewsHeading, reviewsNote } from '../../data/testimonials';
 import SectionHeading from '../ui/SectionHeading';
 
-/* desktop thread geometry â€” matches the viewBox of the SVG below */
+/* desktop thread geometry — matches the viewBox of the SVG below */
 const VIEW_W = 1200;
 const VIEW_H = 520;
 const POINTS = [
@@ -95,14 +95,14 @@ export default function ReviewsThreadSection() {
     return () => ctx.revert();
   }, [reduced]);
 
-  const headingLines = ['Your Comfort Deserves a', 'Better Standard.'];
+  const headingLines = reviewsHeading.replace('. So', '.\nSo').split('\n');
 
   return (
     <section
       id="reviews"
       ref={rootRef}
       aria-labelledby="reviews-heading"
-      className="relative overflow-hidden bg-navy-ink py-24 text-white sm:py-28 lg:py-36"
+      className="relative overflow-hidden bg-navy-ink py-16 text-white sm:py-20 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -114,26 +114,22 @@ export default function ReviewsThreadSection() {
       />
 
       <div className="shell relative">
-        <div className="grid gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <SectionHeading
-              as="h2"
-              align="center"
-              id="reviews-heading"
-              tone="light"
-              eyebrow="Reviews"
-              lines={headingLines}
-              lead="The thread connects each experience with the next â€” comfort, communication and service that continues after the visit."
-            />
-          </div>
+        <div className="mx-auto flex max-w-3xl flex-col items-center">
+          <SectionHeading
+            as="h2"
+            align="center"
+            id="reviews-heading"
+            tone="light"
+            eyebrow="Reviews"
+            lines={headingLines}
+            lead="The thread connects each experience with the next — comfort, communication and service that continues after the visit."
+          />
 
-          <div className="flex items-end lg:col-span-5 lg:justify-end">
-            <div className="fade-up max-w-[32ch] border border-white/15 bg-white/5 p-5">
-              <p className="font-display text-[0.6rem] font-semibold uppercase tracking-wide2 text-iso-orange">
-                Placeholder content
-              </p>
-              <p className="mt-3 text-[0.85rem] leading-relaxed text-white/65">{reviewsNote}</p>
-            </div>
+          <div className="fade-up mt-5 max-w-[46ch] border border-white/15 bg-white/5 p-5 text-center">
+            <p className="font-display text-[0.6rem] font-semibold uppercase tracking-wide2 text-iso-orange">
+              Placeholder content
+            </p>
+            <p className="mt-3 text-[0.85rem] leading-relaxed text-white/65">{reviewsNote}</p>
           </div>
         </div>
 
@@ -228,14 +224,14 @@ export default function ReviewsThreadSection() {
 
         <div className="fade-up mt-14 flex flex-wrap items-center gap-4 border-t border-white/12 pt-8">
           <span className="text-[0.7rem] uppercase tracking-[0.2em] text-white/45">
-            Comfort is personal â€” so is the service behind it
+            Comfort is personal — so is the service behind it
           </span>
           <span className="h-px flex-1 bg-white/15" aria-hidden="true" />
           <a
-            href="#contact"
+            href="/contact-us"
             className="link-underline font-display text-[0.72rem] font-bold uppercase tracking-[0.16em] text-white hover:text-iso-orange"
           >
-            Share your experience
+            Schedule a service
           </a>
         </div>
       </div>

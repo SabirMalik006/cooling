@@ -1,14 +1,37 @@
 import { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { ScrollTrigger } from './animations/gsap';
+import useScrollToHash from './hooks/useScrollToHash';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import HeroSection from './components/sections/HeroSection';
-import WhyChooseUsSection from './components/sections/WhyChooseUsSection';
-import ServicesWheelSection from './components/sections/ServicesWheelSection';
-import ServiceAreasSection from './components/sections/ServiceAreasSection';
-import PartnersSection from './components/sections/PartnersSection';
-import ReviewsThreadSection from './components/sections/ReviewsThreadSection';
-import ServiceRequestForm from './components/layout/ServiceRequestForm';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ContactUsPage from './pages/ContactUsPage';
+
+function RoutesWithScroll() {
+  useScrollToHash();
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => ScrollTrigger.refresh(), 350);
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
+
+  return (
+    <>
+      <main id="main">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact-us" element={<ContactUsPage />} />
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+      </main>
+      <Footer />
+    </>
+  );
+}
 
 export default function App() {
   useEffect(() => {
@@ -24,24 +47,12 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <BrowserRouter>
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-
       <Header />
-
-      <main id="main">
-        <HeroSection />
-        <WhyChooseUsSection />
-        <ServicesWheelSection />
-        <ServiceAreasSection />
-        <PartnersSection />
-        <ReviewsThreadSection />
-      </main>
-
-      <ServiceRequestForm />
-      <Footer />
-    </>
+      <RoutesWithScroll />
+    </BrowserRouter>
   );
 }

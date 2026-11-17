@@ -77,7 +77,7 @@ export default function WhyChooseUsSection() {
       ref={rootRef}
       data-rules
       aria-labelledby="why-heading"
-      className="relative overflow-hidden bg-iso-soft-white py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden bg-iso-soft-white py-16 sm:py-20 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -85,26 +85,21 @@ export default function WhyChooseUsSection() {
       />
 
       <div className="shell">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-6">
-          <div className="lg:col-span-7">
-            <SectionHeading
-              as="h2"
-              align="center"
-              eyebrow="Why Choose Us"
-              lines={['Your Comfort Deserves a', 'Better Standard.']}
-              lead="Every space is different. The right heating and cooling solution should reflect the way you live, work, and experience comfort."
-            />
-          </div>
-
-          <div className="flex items-end lg:col-span-5 lg:justify-end">
-            <p className="fade-up max-w-[26ch] border-l-2 border-iso-orange pl-5 text-[0.9rem] leading-relaxed text-iso-charcoal/75">
-              Precision engineering on one side, everyday comfort on the other — the balance ISO
-              Mechanical is built around.
-            </p>
-          </div>
+        <div className="mx-auto max-w-3xl">
+          <SectionHeading
+            as="h2"
+            align="center"
+            eyebrow="Why Choose Us"
+            lines={['Your Comfort Deserves', 'a Better Standard.']}
+            lead="Every space is different. The right heating and cooling solution should reflect the way you live, work, and experience comfort."
+          />
+          <p className="fade-up mx-auto mt-4 max-w-[52ch] text-center text-[0.88rem] leading-relaxed text-iso-charcoal/70">
+            Precision engineering on one side, everyday comfort on the other — the balance ISO
+            Mechanical is built around.
+          </p>
         </div>
 
-        <div className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-12 lg:gap-10">
+        <div className="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-10">
           <div className="relative lg:col-span-5">
             <figure className="mask-reveal relative overflow-hidden">
               <img
@@ -187,7 +182,7 @@ export default function WhyChooseUsSection() {
               </span>
               <span className="h-px flex-1 bg-navy/15" aria-hidden="true" />
               <span className="text-[0.7rem] uppercase tracking-[0.2em] text-iso-orange">
-                Request Service
+                Schedule a Service
               </span>
             </div>
           </div>

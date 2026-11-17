@@ -1,6 +1,6 @@
-﻿/**
+/**
  * Editorial section heading: marker, eyebrow, masked headline lines, lead copy.
- * `lines` drives the mask reveal â€” one `.reveal-line` per line of type.
+ * `lines` drives the mask reveal — one `.reveal-line` per line of type.
  */
 export default function SectionHeading({
   eyebrow,
@@ -8,7 +8,7 @@ export default function SectionHeading({
   lead,
   tone = 'dark',
   number,
-  align = 'left',
+  align = 'center',
   id,
   className = '',
   leadClassName = '',
@@ -19,7 +19,7 @@ export default function SectionHeading({
   return (
     <div
       className={[
-        'flex flex-col gap-6',
+        'flex flex-col gap-5',
         align === 'center' ? 'items-center text-center' : 'items-start text-left',
         className,
       ].join(' ')}
@@ -48,7 +48,7 @@ export default function SectionHeading({
       {lines.length > 0 && (
         <HeadingTag
           id={id}
-          className={`max-w-[16ch] text-[clamp(2.4rem,6vw,5.2rem)] font-bold ${
+          className={`max-w-[22ch] text-[clamp(1.85rem,4vw,3.35rem)] font-bold ${
             isLight ? 'text-white' : 'text-navy'
           }`}
         >
@@ -62,7 +62,7 @@ export default function SectionHeading({
 
       {lead && (
         <p
-          className={`max-w-[46ch] text-[1.02rem] leading-relaxed ${
+          className={`max-w-[52ch] text-[0.98rem] leading-relaxed ${
             isLight ? 'text-white/70' : 'text-iso-charcoal/80'
           } fade-up ${leadClassName}`}
         >

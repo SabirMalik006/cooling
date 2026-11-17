@@ -1,6 +1,10 @@
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { siteConfig } from '../../data/siteConfig';
 import { activeServices } from '../../data/services';
 import { communities, hq } from '../../data/serviceAreas';
+import useReveals from '../../animations/useReveals';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import logo from '../../assets/iso-mechanical-logo.jpg';
 
 const year = new Date().getFullYear();
@@ -14,10 +18,15 @@ function ColumnHeading({ children }) {
 }
 
 export default function Footer() {
+  const rootRef = useRef(null);
+  const reduced = useReducedMotion();
+
+  useReveals(rootRef, { reduced, start: 'top 92%' });
+
   return (
     <footer
-      aria-labelledby="footer-heading"
-      className="relative isolate overflow-hidden bg-navy-deep pt-0 text-white"
+      ref={rootRef}
+      className="relative isolate overflow-hidden bg-navy-deep pt-4 text-white sm:pt-6"
     >
       <div
         aria-hidden="true"
@@ -41,61 +50,8 @@ export default function Footer() {
       </svg>
 
       <div className="shell relative">
-        <div className="grid gap-12 pb-16 lg:gap-14 lg:pb-20">
-          <div>
-            <span className="eyebrow mb-7 inline-flex items-center gap-3 text-iso-orange fade-up">
-              <span aria-hidden="true" className="h-px w-8 bg-iso-orange" />
-              Request Service
-            </span>
-
-            <h2
-              id="footer-heading"
-              className="text-[clamp(2.4rem,6vw,4.6rem)] font-extrabold leading-[0.94] tracking-mega text-white"
-            >
-              <span className="reveal-line">
-                <span>Comfort,</span>
-              </span>
-              <span className="reveal-line">
-                <span>Engineered for</span>
-              </span>
-              <span className="reveal-line">
-                <span className="text-iso-orange">Every Season.</span>
-              </span>
-            </h2>
-
-            <p className="fade-up mt-7 max-w-[42ch] text-[1rem] leading-relaxed text-white/60">
-              {siteConfig.description}
-            </p>
-
-            <div className="fade-up mt-8 border-t border-white/12 pt-6">
-              <p className="font-display text-[0.6rem] font-semibold uppercase tracking-wide2 text-white/45">
-                Visit
-              </p>
-              <address className="mt-3 not-italic text-[1.05rem] leading-relaxed text-white/85">
-                {siteConfig.address.line1}
-                <br />
-                {siteConfig.address.line2}
-                <br />
-                {siteConfig.address.country}
-              </address>
-
-              {siteConfig.phone || siteConfig.email ? (
-                <p className="mt-4 text-[0.9rem] text-white/70">
-                  {siteConfig.phone && <span className="block">{siteConfig.phone}</span>}
-                  {siteConfig.email && <span className="block">{siteConfig.email}</span>}
-                </p>
-              ) : (
-                <p className="mt-4 max-w-[34ch] text-[0.8rem] leading-relaxed text-white/45">
-                  Phone and email will appear here as soon as they are confirmed for publication.
-                </p>
-              )}
-            </div>
-          </div>
-
-        </div>
-
         {/* link grid */}
-        <div className="grid gap-10 border-t border-white/12 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">
             <div className="flex items-center gap-4">
               <span className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden bg-white ring-1 ring-white/20">
@@ -139,12 +95,12 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               {siteConfig.navigation.map((item) => (
                 <li key={item.href}>
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className="link-underline text-[0.9rem] text-white/65 transition hover:text-white"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -155,21 +111,21 @@ export default function Footer() {
             <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
               {activeServices.slice(0, 8).map((service) => (
                 <li key={service.id}>
-                  <a
-                    href="#services"
+                  <Link
+                    to="/#services"
                     className="link-underline text-[0.9rem] text-white/65 transition hover:text-white"
                   >
                     {service.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
-            <a
-              href="#services"
+            <Link
+              to="/#services"
               className="mt-4 inline-block font-display text-[0.62rem] font-bold uppercase tracking-[0.16em] text-iso-orange"
             >
               All {activeServices.length} services
-            </a>
+            </Link>
           </nav>
 
           <nav aria-label="Service areas" className="lg:col-span-3">
@@ -180,23 +136,26 @@ export default function Footer() {
                   {hq.city}, {hq.stateAbbr}
                 </span>
               </li>
-              {communities.slice(0, 6).map((community) => (
-                <li key={community.name}>
-                  <a
-                    href="#service-areas"
-                    className="link-underline text-[0.9rem] text-white/65 transition hover:text-white"
-                  >
-                    {community.name}
-                  </a>
-                </li>
-              ))}
+              {communities
+                .filter((community) => community.name !== hq.city)
+                .slice(0, 6)
+                .map((community) => (
+                  <li key={community.name}>
+                    <Link
+                      to="/#service-areas"
+                      className="link-underline text-[0.9rem] text-white/65 transition hover:text-white"
+                    >
+                      {community.name}
+                    </Link>
+                  </li>
+                ))}
             </ul>
-            <a
-              href="#service-areas"
+            <Link
+              to="/#service-areas"
               className="mt-4 inline-block font-display text-[0.62rem] font-bold uppercase tracking-[0.16em] text-iso-blue"
             >
               Coverage details
-            </a>
+            </Link>
           </nav>
         </div>
 

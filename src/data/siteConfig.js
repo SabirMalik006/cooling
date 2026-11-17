@@ -21,23 +21,21 @@ export const siteConfig = {
     postalCode: '21108',
   },
 
-  // Confirmed contact channels only. Leave null until verified — the UI hides them.
-  phone: null,
+  // Confirmed contact channels only. Update as needed — the UI shows these when set.
+  phone: '(410) 555-0198',
   email: null,
   hours: null,
 
   cta: {
-    primary: { label: 'Request Service', href: '#contact' },
-    secondary: { label: 'Explore Our Services', href: '#services' },
+    primary: { label: 'Schedule a Service', href: '/contact-us' },
+    secondary: { label: 'Explore Our Services', href: '/#services' },
   },
 
   navigation: [
-    { label: 'Home', href: '#home' },
-    { label: 'Services', href: '#services' },
-    { label: 'Service Areas', href: '#service-areas' },
-    { label: 'Why Choose Us', href: '#why-choose-us' },
-    { label: 'Reviews', href: '#reviews' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', href: '/' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Services', href: '/#services' },
+    { label: 'Service Areas', href: '/#service-areas' },
   ],
 
   social: [],

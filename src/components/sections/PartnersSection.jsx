@@ -41,24 +41,20 @@ export default function PartnersSection() {
       id="partners"
       ref={rootRef}
       aria-labelledby="partners-heading"
-      className="relative overflow-hidden bg-white py-24 sm:py-28 lg:py-32"
+      className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24"
     >
       <div className="shell">
-        <div className="grid gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <SectionHeading
-              as="h2"
-              align="center"
-              id="partners-heading"
-              eyebrow="Equipment & Partners"
-              lines={['Your Comfort Deserves a', 'Better Standard.']}
-            />
-          </div>
-          <div className="flex items-end lg:col-span-5 lg:justify-end">
-            <p className="fade-up max-w-[34ch] border-l-2 border-iso-blue pl-5 text-[0.92rem] leading-relaxed text-iso-charcoal/75">
-              {partnersNote}
-            </p>
-          </div>
+        <div className="mx-auto max-w-3xl">
+          <SectionHeading
+            as="h2"
+            align="center"
+            id="partners-heading"
+            eyebrow="Equipment & Partners"
+            lines={['Built Around the', 'Systems You Own.']}
+          />
+          <p className="fade-up mx-auto mt-4 max-w-[54ch] text-center text-[0.92rem] leading-relaxed text-iso-charcoal/75">
+            {partnersNote}
+          </p>
         </div>
       </div>
 

@@ -85,7 +85,7 @@ export default function ServiceAreasSection() {
       id="service-areas"
       ref={rootRef}
       aria-labelledby="areas-heading"
-      className="relative overflow-hidden bg-iso-ice py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden bg-iso-ice py-16 sm:py-20 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -93,18 +93,19 @@ export default function ServiceAreasSection() {
       />
 
       <div className="shell">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <SectionHeading
-              as="h2"
-              align="center"
-              id="areas-heading"
-              eyebrow="States & Service Areas"
-              lines={['Your Comfort Deserves a', 'Better Standard.']}
-              lead={coverageNote}
-            />
+        <SectionHeading
+          as="h2"
+          align="center"
+          id="areas-heading"
+          className="mx-auto max-w-3xl"
+          eyebrow="States & Service Areas"
+          lines={['Rooted in Millersville,', 'Ready for Maryland.']}
+          lead={coverageNote}
+        />
 
-            <address className="fade-up mt-10 not-italic">
+        <div className="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <address className="fade-up not-italic">
               <div className="flex items-start gap-4 border-l-2 border-iso-orange pl-5">
                 <MapPin className="mt-1 h-5 w-5 shrink-0 text-iso-orange" strokeWidth={1.6} aria-hidden="true" />
                 <div>
@@ -158,8 +159,8 @@ export default function ServiceAreasSection() {
             </div>
 
             <div className="fade-up mt-9">
-              <Button href="#contact" variant="primary">
-                Ask about your area
+              <Button href="/contact-us" variant="primary">
+                Schedule your service
               </Button>
             </div>
           </div>

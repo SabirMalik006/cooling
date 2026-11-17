@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { Menu } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, Phone } from 'lucide-react';
 import { siteConfig } from '../../data/siteConfig';
 import logo from '../../assets/iso-mechanical-logo.jpg';
 import Button from '../ui/Button';
 import MobileNavigation from './MobileNavigation';
 
-function useActiveSection() {
-  const [active, setActive] = useState('#home');
+function useHomeSectionSpy(enabled) {
+  const [active, setActive] = useState('');
 
   useEffect(() => {
+    if (!enabled) return undefined;
+
     const sections = siteConfig.navigation
-      .map((item) => document.querySelector(item.href))
+      .map((item) => item.href.startsWith('/#') ? document.querySelector(item.href.slice(1)) : null)
       .filter(Boolean);
 
     if (!sections.length) return undefined;
@@ -27,7 +30,7 @@ function useActiveSection() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [enabled]);
 
   return active;
 }
@@ -37,7 +40,11 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const closeRef = useRef(null);
-  const activeHref = useActiveSection();
+  const { pathname, hash } = useLocation();
+
+  const isHome = pathname === '/';
+  const spyActive = useHomeSectionSpy(isHome);
+  const activeHref = hash ? `/${hash}` : isHome ? (spyActive ? `/#${spyActive}` : '/') : pathname;
 
   useEffect(() => {
     const onScroll = () => {
@@ -66,73 +73,77 @@ export default function Header() {
     };
   }, [open]);
 
-  const light = !scrolled;
+  const overHero = !scrolled;
 
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-[60] transition-[background-color,box-shadow,border-color] duration-500 ${
+        className={`fixed inset-x-0 top-0 z-[60] border-b transition-[background-color,box-shadow,border-color] duration-500 ${
           scrolled
-            ? 'border-b border-navy/10 bg-navy-deep/50 backdrop-blur-md shadow-[0_10px_30px_-24px_rgba(20,44,86,0.6)]'
-            : 'border-b border-white/10 bg-transparent'
+            ? 'border-navy/10 bg-white/95 shadow-[0_10px_30px_-22px_rgba(20,44,86,0.65)] backdrop-blur-md'
+            : 'border-white/12 bg-navy-ink/85 backdrop-blur-md'
         }`}
       >
         <div className="shell flex h-[var(--header-h)] items-center justify-between gap-6">
-          <a
-            href="#home"
+          <Link
+            to="/"
             className="group flex items-center gap-3"
             aria-label={`${siteConfig.name} — home`}
           >
             <span
-              className={`grid h-14 w-14 shrink-0 place-items-center overflow-hidden bg-white transition ${
-                light ? 'ring-1 ring-white/25' : 'ring-1 ring-navy/10'
+              className={`grid h-12 w-12 shrink-0 place-items-center overflow-hidden bg-white transition ring-1 ${
+                overHero ? 'ring-white/30' : 'ring-navy/10'
               }`}
             >
               <img
                 src={logo}
                 alt="ISO Mechanical — Heating & Cooling Services"
                 className="h-full w-full object-contain"
-                width={56}
-                height={56}
+                width={48}
+                height={48}
                 loading="eager"
                 decoding="async"
               />
             </span>
             <span className="hidden flex-col leading-none xs:flex">
               <span
-                className={`font-display text-[1.02rem] font-extrabold uppercase tracking-[0.06em] ${
-                  light ? 'text-white' : 'text-navy'
+                className={`font-display text-[0.95rem] font-extrabold uppercase tracking-[0.06em] ${
+                  overHero ? 'text-white' : 'text-navy'
                 }`}
               >
                 ISO Mechanical
               </span>
               <span
-                className={`mt-1 font-display text-[0.56rem] font-semibold uppercase tracking-wide2 ${
-                  light ? 'text-white/55' : 'text-iso-charcoal/70'
+                className={`mt-1 hidden whitespace-nowrap font-display text-[0.53rem] font-semibold uppercase tracking-wide2 sm:block ${
+                  overHero ? 'text-white/60' : 'text-iso-charcoal/70'
                 }`}
               >
                 Heating &amp; Cooling Services
               </span>
             </span>
-          </a>
+          </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-6 xl:flex">
             {siteConfig.navigation.map((item) => {
               const isActive = activeHref === item.href;
               return (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  to={item.href}
                   data-active={isActive}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`link-underline font-display text-[0.76rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 ${
-                    light
-                      ? 'text-white/75 hover:text-white'
-                      : 'text-navy/70 hover:text-navy'
-                  } ${isActive ? (light ? 'text-white' : 'text-navy') : ''}`}
+                  className={`link-underline pb-1 font-display text-[0.72rem] font-semibold uppercase tracking-[0.13em] transition-colors duration-300 ${
+                    overHero
+                      ? isActive
+                        ? 'text-white'
+                        : 'text-white/80 hover:text-white'
+                      : isActive
+                        ? 'text-navy'
+                        : 'text-navy/65 hover:text-navy'
+                  }`}
                 >
                   {item.label}
-                </a>
+                </Link>
               );
             })}
           </nav>
@@ -141,11 +152,32 @@ export default function Header() {
             {siteConfig.phone && (
               <a
                 href={`tel:${siteConfig.phone.replace(/[^+\d]/g, '')}`}
-                className={`hidden font-display text-[0.78rem] font-semibold uppercase tracking-[0.12em] md:block ${
-                  light ? 'text-white/80 hover:text-white' : 'text-navy/75 hover:text-navy'
+                aria-label={`Call ${siteConfig.name} at ${siteConfig.phone}`}
+                className={`group inline-flex items-center gap-2.5 border p-1.5 transition-colors duration-300 lg:py-1.5 lg:pl-1.5 lg:pr-3.5 ${
+                  overHero
+                    ? 'border-white/25 hover:border-white/50 hover:bg-white/10'
+                    : 'border-navy/15 hover:border-navy/35 hover:bg-navy/[0.04]'
                 }`}
               >
-                {siteConfig.phone}
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-iso-orange text-white shadow-[0_6px_16px_-8px_rgba(244,90,10,0.9)] transition group-hover:bg-[#d44e06]">
+                  <Phone className="h-[0.9rem] w-[0.9rem]" aria-hidden="true" />
+                </span>
+                <span className="hidden flex-col items-start leading-none lg:flex">
+                  <span
+                    className={`text-[0.5rem] font-semibold uppercase tracking-[0.22em] ${
+                      overHero ? 'text-white/60' : 'text-iso-charcoal/60'
+                    }`}
+                  >
+                    Call now
+                  </span>
+                  <span
+                    className={`mt-1.5 font-display text-[0.76rem] font-bold tracking-[0.06em] ${
+                      overHero ? 'text-white' : 'text-navy'
+                    }`}
+                  >
+                    {siteConfig.phone}
+                  </span>
+                </span>
               </a>
             )}
 
@@ -160,9 +192,9 @@ export default function Header() {
               aria-label="Open menu"
               aria-expanded={open}
               aria-controls="mobile-navigation"
-              className={`grid h-11 w-11 place-items-center border transition lg:hidden ${
-                light
-                  ? 'border-white/25 text-white hover:border-white/70'
+              className={`grid h-11 w-11 place-items-center border transition xl:hidden ${
+                overHero
+                  ? 'border-white/30 text-white hover:border-white/70'
                   : 'border-navy/20 text-navy hover:border-navy/60'
               }`}
             >
@@ -171,10 +203,7 @@ export default function Header() {
           </div>
         </div>
 
-        <div
-          className="h-[2px] w-full bg-transparent"
-          aria-hidden="true"
-        >
+        <div className="h-[2px] w-full bg-transparent" aria-hidden="true">
           <div
             className="h-full origin-left bg-gradient-to-r from-iso-orange via-iso-orange to-iso-blue transition-transform duration-200 ease-out"
             style={{ transform: `scaleX(${progress})` }}

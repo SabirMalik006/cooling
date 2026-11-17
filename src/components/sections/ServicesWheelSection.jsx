@@ -78,7 +78,7 @@ export default function ServicesWheelSection() {
       id="services"
       ref={rootRef}
       aria-labelledby="services-heading"
-      className="relative isolate overflow-hidden bg-navy py-24 text-white sm:py-28 lg:py-32"
+      className="relative isolate overflow-hidden bg-navy py-16 text-white sm:py-20 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -90,24 +90,19 @@ export default function ServicesWheelSection() {
       />
 
       <div className="shell">
-        <div className="grid gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <SectionHeading
-              as="h2"
-              align="center"
-              id="services-heading"
-              tone="light"
-              eyebrow="Services"
-              lines={['Your Comfort Deserves a', 'Better Standard.']}
-              lead="Turn the dial. Each marker opens a service category — select one to read what it involves."
-            />
-          </div>
-          <div className="flex items-end justify-start lg:col-span-5 lg:justify-end">
-            <p className="fade-up max-w-[30ch] border-l border-white/20 pl-5 text-[0.85rem] leading-relaxed text-white/55">
-              Service categories are editable and are being confirmed with the business before
-              launch.
-            </p>
-          </div>
+        <div className="mx-auto max-w-3xl">
+          <SectionHeading
+            as="h2"
+            align="center"
+            id="services-heading"
+            tone="light"
+            eyebrow="Services"
+            lines={['Every Service,', 'One Precise Dial.']}
+            lead="Turn the dial. Each marker opens a service category — select one to read what it involves."
+          />
+          <p className="fade-up mx-auto mt-4 max-w-[52ch] text-center text-[0.78rem] leading-relaxed text-white/45">
+            Service categories are editable and are being confirmed with the business before launch.
+          </p>
         </div>
 
         {/* mobile selector chips */}
@@ -187,8 +182,8 @@ export default function ServicesWheelSection() {
                   </figure>
 
                   <div className="mt-7 flex flex-wrap items-center gap-4">
-                    <Button href="#contact" variant="primary">
-                      Request this service
+                    <Button href="/contact-us" variant="primary">
+                      Schedule this service
                     </Button>
                     {!active.verified && (
                       <span className="text-[0.66rem] uppercase tracking-[0.16em] text-white/40">

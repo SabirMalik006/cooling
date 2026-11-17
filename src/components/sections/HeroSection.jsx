@@ -7,7 +7,7 @@ import heroImage from '../../assets/img/hero-home.jpg';
 import Button from '../ui/Button';
 import AirflowCanvas from './AirflowCanvas';
 
-const HEADLINE = ['Your Comfort Deserves a', 'Better Standard.'];
+const HEADLINE = ['Comfort,', 'Engineered for', 'Every Season.'];
 
 export default function HeroSection() {
   const rootRef = useRef(null);
@@ -87,7 +87,7 @@ export default function HeroSection() {
         <path d="M200 4v30M200 366v30M4 200h30M366 200h30" stroke="currentColor" strokeWidth="0.8" />
       </svg>
 
-      <div className="shell relative grid min-h-[100svh] items-center gap-12 pb-20 pt-32 lg:grid-cols-12 lg:gap-8 lg:pb-24 lg:pt-36">
+      <div className="shell relative grid min-h-[100svh] items-center gap-10 pb-14 pt-28 lg:grid-cols-12 lg:gap-8 lg:pb-16 lg:pt-32">
         <div className="lg:col-span-7 xl:col-span-6">
           <div
             data-hero="eyebrow"
@@ -128,7 +128,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-6">
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-5">
             <span data-hero="badge" className="flex items-center gap-2.5 text-[0.72rem] uppercase tracking-[0.2em] text-white/60">
               <span className="h-2 w-2 rounded-full bg-iso-orange" aria-hidden="true" />
               Heating
@@ -156,7 +156,7 @@ export default function HeroSection() {
               height={1600}
               fetchPriority="high"
               decoding="async"
-              className="h-[46vh] w-full object-cover object-center sm:h-[54vh] lg:h-[70vh]"
+              className="h-[42vh] w-full object-cover object-center sm:h-[50vh] lg:h-[58vh]"
             />
             <div
               aria-hidden="true"
