@@ -78,7 +78,7 @@ export default function ServicesWheelSection() {
       id="services"
       ref={rootRef}
       aria-labelledby="services-heading"
-      className="relative isolate overflow-hidden bg-navy py-16 text-white sm:py-20 lg:py-24"
+      className="relative isolate overflow-hidden bg-navy py-12 text-white sm:py-14 lg:py-16"
     >
       <div
         aria-hidden="true"
@@ -100,13 +100,33 @@ export default function ServicesWheelSection() {
             lines={['Every Service,', 'One Precise Dial.']}
             lead="Turn the dial. Each marker opens a service category — select one to read what it involves."
           />
-          <p className="fade-up mx-auto mt-4 max-w-[52ch] text-center text-[0.78rem] leading-relaxed text-white/45">
+          <p className="fade-up mx-auto mt-2 max-w-[52ch] text-center text-[0.76rem] leading-relaxed text-white/45">
             Service categories are editable and are being confirmed with the business before launch.
           </p>
+
+          <div className="fade-up mx-auto mt-5 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <span className="inline-flex items-center gap-2 border border-white/12 bg-white/[0.04] px-3 py-1.5 font-display text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-white/75">
+              <span className="text-iso-orange">{services.length}</span>
+              <span className="text-white/55">Service categories</span>
+            </span>
+            <span aria-hidden="true" className="hidden h-px w-8 bg-white/15 sm:block" />
+            <span className="inline-flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.14em] text-white/55">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-iso-blue shadow-[0_0_0_3px_rgba(7,133,214,0.18)]" />
+              Cooling
+            </span>
+            <span className="inline-flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.14em] text-white/55">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-iso-orange shadow-[0_0_0_3px_rgba(244,90,10,0.18)]" />
+              Heating
+            </span>
+            <span className="inline-flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.14em] text-white/55">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-white/70 shadow-[0_0_0_3px_rgba(255,255,255,0.12)]" />
+              Systems
+            </span>
+          </div>
         </div>
 
         {/* mobile selector chips */}
-        <div className="no-scrollbar -mx-5 mt-10 flex gap-2 overflow-x-auto px-5 lg:hidden">
+        <div className="no-scrollbar -mx-5 mt-6 flex gap-2 overflow-x-auto px-5 lg:hidden">
           {services.map((service, index) => (
             <button
               key={service.id}
@@ -126,7 +146,7 @@ export default function ServicesWheelSection() {
           ))}
         </div>
 
-        <div className="mt-12 grid items-center gap-12 lg:mt-16 lg:grid-cols-12 lg:gap-14">
+        <div className="mt-8 grid items-center gap-8 lg:mt-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7" ref={wheelRef}>
             <ServiceWheel
               services={services}
@@ -134,15 +154,15 @@ export default function ServicesWheelSection() {
               onSelect={setActiveIndex}
             />
 
-            <p className="mt-8 flex items-center justify-center gap-3 text-[0.62rem] uppercase tracking-[0.22em] text-white/40">
+            <p className="mt-4 flex items-center justify-center gap-3 text-[0.6rem] uppercase tracking-[0.2em] text-white/40">
               <span className="h-px w-8 bg-white/25" aria-hidden="true" />
               Scroll to rotate the dial
             </p>
           </div>
 
           <div className="lg:col-span-5">
-            <div className="relative border border-white/12 bg-navy-deep/70 p-6 backdrop-blur-sm sm:p-8">
-              <div className="flex items-center justify-between gap-4 border-b border-white/12 pb-5">
+            <div className="relative border border-white/12 bg-navy-deep/70 p-5 backdrop-blur-sm sm:p-6">
+              <div className="flex items-center justify-between gap-4 border-b border-white/12 pb-4">
                 <span className={`border px-3 py-1.5 font-display text-[0.6rem] font-semibold uppercase tracking-[0.18em] ${tone.className}`}>
                   {tone.label}
                 </span>
@@ -159,16 +179,16 @@ export default function ServicesWheelSection() {
                   exit={reduced ? undefined : { opacity: 0, y: -12 }}
                   transition={{ duration: reduced ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <div className="pt-6">
-                    <h3 className="max-w-[16ch] text-[clamp(1.7rem,3vw,2.4rem)] font-bold leading-[1.02] text-white">
+                  <div className="pt-4">
+                    <h3 className="max-w-[16ch] text-[clamp(1.45rem,2.6vw,2rem)] font-bold leading-[1.05] text-white">
                       {active.label}
                     </h3>
-                    <p className="mt-4 text-[0.97rem] leading-relaxed text-white/65">
+                    <p className="mt-3 text-[0.92rem] leading-relaxed text-white/65">
                       {active.summary}
                     </p>
                   </div>
 
-                  <figure className="mt-7 overflow-hidden">
+                  <figure className="mt-4 overflow-hidden">
                     <img
                       key={CATEGORY_IMAGES[active.image]}
                       src={CATEGORY_IMAGES[active.image] || roofImage}
@@ -177,11 +197,11 @@ export default function ServicesWheelSection() {
                       height={625}
                       loading="lazy"
                       decoding="async"
-                      className="h-40 w-full object-cover sm:h-44"
+                      className="h-32 w-full object-cover sm:h-36"
                     />
                   </figure>
 
-                  <div className="mt-7 flex flex-wrap items-center gap-4">
+                  <div className="mt-4 flex flex-wrap items-center gap-3">
                     <Button href="/contact-us" variant="primary">
                       Schedule this service
                     </Button>
@@ -194,7 +214,7 @@ export default function ServicesWheelSection() {
                 </motion.div>
               </AnimatePresence>
 
-              <div className="mt-8 flex items-center justify-between border-t border-white/12 pt-5">
+              <div className="mt-5 flex items-center justify-between border-t border-white/12 pt-4">
                 <button
                   type="button"
                   onClick={() => go(activeIndex - 1)}

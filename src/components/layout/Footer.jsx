@@ -51,9 +51,9 @@ export default function Footer() {
 
       <div className="shell relative">
         {/* link grid */}
-        <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        <div className="grid gap-10 py-14 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center gap-4 sm:justify-start">
               <span className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden bg-white ring-1 ring-white/20">
                 <img
                   src={logo}
@@ -65,7 +65,7 @@ export default function Footer() {
                   decoding="async"
                 />
               </span>
-              <span className="flex flex-col leading-tight">
+              <span className="flex flex-col text-left leading-tight">
                 <span className="font-display text-[1.15rem] font-extrabold uppercase tracking-[0.05em] text-white">
                   ISO Mechanical
                 </span>
@@ -75,12 +75,12 @@ export default function Footer() {
               </span>
             </div>
 
-            <p className="mt-6 max-w-[36ch] text-[0.9rem] leading-relaxed text-white/55">
+            <p className="mx-auto mt-6 max-w-[36ch] text-[0.9rem] leading-relaxed text-white/55 sm:mx-0">
               Heating and cooling services for homes and light commercial spaces, planned with
               precision and delivered with care.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
               <span className="border border-iso-orange/50 px-3 py-1.5 text-[0.58rem] uppercase tracking-[0.16em] text-iso-orange">
                 Heating
               </span>
@@ -92,7 +92,7 @@ export default function Footer() {
 
           <nav aria-label="Footer navigation" className="lg:col-span-2">
             <ColumnHeading>Explore</ColumnHeading>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col items-center gap-3 sm:items-start">
               {siteConfig.navigation.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -108,7 +108,7 @@ export default function Footer() {
 
           <nav aria-label="HVAC services" className="lg:col-span-3">
             <ColumnHeading>Services</ColumnHeading>
-            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            <ul className="grid grid-cols-1 justify-items-center gap-3 sm:grid-cols-2 sm:justify-items-start lg:grid-cols-1">
               {activeServices.slice(0, 8).map((service) => (
                 <li key={service.id}>
                   <Link
@@ -130,7 +130,7 @@ export default function Footer() {
 
           <nav aria-label="Service areas" className="lg:col-span-3">
             <ColumnHeading>Service Areas</ColumnHeading>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col items-center gap-3 sm:items-start">
               <li>
                 <span className="text-[0.9rem] font-semibold text-white">
                   {hq.city}, {hq.stateAbbr}
@@ -159,11 +159,11 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-white/12 py-7 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col items-center gap-3 border-t border-white/12 py-7 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <p className="text-[0.75rem] text-white/45">
             © {year} {siteConfig.fullName}. All rights reserved.
           </p>
-          <p className="text-[0.75rem] text-white/35">
+          <p className="text-[0.75rem] text-white/35 sm:text-right">
             {siteConfig.address.line1}, {siteConfig.address.line2}
           </p>
         </div>

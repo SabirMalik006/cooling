@@ -77,7 +77,7 @@ export default function WhyChooseUsSection() {
       ref={rootRef}
       data-rules
       aria-labelledby="why-heading"
-      className="relative overflow-hidden bg-iso-soft-white py-16 sm:py-20 lg:py-24"
+      className="relative overflow-hidden bg-iso-soft-white py-14 sm:py-16 lg:py-20"
     >
       <div
         aria-hidden="true"
@@ -93,14 +93,14 @@ export default function WhyChooseUsSection() {
             lines={['Your Comfort Deserves', 'a Better Standard.']}
             lead="Every space is different. The right heating and cooling solution should reflect the way you live, work, and experience comfort."
           />
-          <p className="fade-up mx-auto mt-4 max-w-[52ch] text-center text-[0.88rem] leading-relaxed text-iso-charcoal/70">
+          <p className="fade-up mx-auto mt-3 max-w-[52ch] text-center text-[0.88rem] leading-relaxed text-iso-charcoal/70">
             Precision engineering on one side, everyday comfort on the other — the balance ISO
             Mechanical is built around.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-10">
-          <div className="relative lg:col-span-5">
+        <div className="mt-8 grid items-center gap-10 lg:mt-10 lg:grid-cols-12 lg:items-center lg:gap-8 xl:gap-10">
+          <div className="relative mx-auto w-full max-w-[34rem] lg:col-span-5 lg:mx-0 lg:max-w-none">
             <figure className="mask-reveal relative overflow-hidden">
               <img
                 src={technicianImage}
@@ -110,7 +110,7 @@ export default function WhyChooseUsSection() {
                 loading="lazy"
                 decoding="async"
                 data-parallax
-                className="h-[22rem] w-full object-cover object-center sm:h-[30rem] lg:h-[36rem]"
+                className="h-[18rem] w-full object-cover object-center sm:h-[22rem] lg:h-[26rem]"
               />
               <div
                 aria-hidden="true"
@@ -122,7 +122,7 @@ export default function WhyChooseUsSection() {
               />
             </figure>
 
-            <figure className="mask-reveal relative -mt-16 ml-auto w-[62%] overflow-hidden border-[10px] border-iso-soft-white sm:w-[52%] lg:-mr-10 lg:-mt-24 lg:w-[64%]">
+            <figure className="mask-reveal relative -mt-12 ml-auto w-[58%] overflow-hidden border-[8px] border-iso-soft-white sm:w-[50%] lg:-mr-6 lg:-mt-16 lg:w-[60%]">
               <img
                 src={interiorImage}
                 alt="Bright, comfortable living room interior"
@@ -136,7 +136,7 @@ export default function WhyChooseUsSection() {
 
             <svg
               aria-hidden="true"
-              className="absolute -left-6 bottom-8 hidden h-40 w-6 text-navy/25 lg:block"
+              className="absolute -left-6 bottom-6 hidden h-32 w-6 text-navy/25 lg:block"
               viewBox="0 0 24 160"
               fill="none"
             >
@@ -146,14 +146,14 @@ export default function WhyChooseUsSection() {
             </svg>
           </div>
 
-          <div className="lg:col-span-6 lg:col-start-7">
+          <div className="lg:col-span-7">
             <ul className="flex flex-col">
               {VALUES.map((value, index) => (
                 <li key={value.id} className="fade-up" style={{ transitionDelay: `${index * 70}ms` }}>
-                  <div className="rule mb-6" aria-hidden="true" />
-                  <div className="group flex gap-6 pb-8">
+                  <div className="rule mb-5" aria-hidden="true" />
+                  <div className="group flex gap-5 pb-6">
                     <span
-                      className={`mt-1 grid h-9 w-9 shrink-0 place-items-center rounded-full border font-display text-[0.7rem] font-bold transition-colors duration-300 ${
+                      className={`mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full border font-display text-[0.7rem] font-bold transition-colors duration-300 ${
                         value.tone === 'orange'
                           ? 'border-iso-orange/40 text-iso-orange group-hover:bg-iso-orange group-hover:text-white'
                           : 'border-iso-blue/40 text-iso-blue group-hover:bg-iso-blue group-hover:text-white'
@@ -163,10 +163,10 @@ export default function WhyChooseUsSection() {
                     </span>
 
                     <div className="min-w-0">
-                      <h3 className="text-[1.35rem] font-bold leading-tight text-navy sm:text-[1.6rem]">
+                      <h3 className="text-[1.2rem] font-bold leading-tight text-navy sm:text-[1.4rem]">
                         {value.title}
                       </h3>
-                      <p className="mt-3 max-w-[44ch] text-[0.98rem] leading-relaxed text-iso-charcoal/80">
+                      <p className="mt-2 max-w-[46ch] text-[0.95rem] leading-relaxed text-iso-charcoal/80">
                         {value.body}
                       </p>
                     </div>
@@ -175,13 +175,13 @@ export default function WhyChooseUsSection() {
               ))}
             </ul>
 
-            <div className="rule mb-6" aria-hidden="true" />
-            <div className="fade-up flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
-              <span className="text-[0.7rem] uppercase tracking-[0.2em] text-navy/55">
+            <div className="rule mb-5" aria-hidden="true" />
+            <div className="fade-up flex flex-wrap items-center gap-x-5 gap-y-2 pt-1">
+              <span className="text-[0.68rem] uppercase tracking-[0.18em] text-navy/55">
                 Heating planned with cooling in mind
               </span>
-              <span className="h-px flex-1 bg-navy/15" aria-hidden="true" />
-              <span className="text-[0.7rem] uppercase tracking-[0.2em] text-iso-orange">
+              <span className="hidden h-px min-w-[3rem] flex-1 bg-navy/15 sm:block" aria-hidden="true" />
+              <span className="text-[0.68rem] uppercase tracking-[0.18em] text-iso-orange">
                 Schedule a Service
               </span>
             </div>

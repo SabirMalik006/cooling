@@ -8,7 +8,8 @@ const TONE = {
 };
 
 function DecorativeRings() {
-  const radialLines = Array.from({ length: 12 }, (_, index) => index * 30);
+  const teeth = Array.from({ length: 12 }, (_, index) => index * 30);
+  const innerNotches = Array.from({ length: 24 }, (_, index) => index * 15);
 
   return (
     <svg
@@ -17,50 +18,76 @@ function DecorativeRings() {
       viewBox="0 0 400 400"
       fill="none"
     >
-      <circle cx="200" cy="200" r="196" stroke="currentColor" strokeWidth="0.7" />
-      <circle cx="200" cy="200" r="176" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 6" />
-      <circle cx="200" cy="200" r="140" stroke="currentColor" strokeWidth="0.5" />
-      <circle cx="200" cy="200" r="96" stroke="currentColor" strokeWidth="0.5" strokeDasharray="1 5" />
+      <defs>
+        <linearGradient id="gear-accent" x1="40" y1="40" x2="360" y2="360" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#0785D6" stopOpacity="0.55" />
+          <stop offset="50%" stopColor="#ffffff" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#F45A0A" stopOpacity="0.55" />
+        </linearGradient>
+      </defs>
 
-      {radialLines.map((angle) => (
+      {/* gear teeth */}
+      {teeth.map((angle) => (
+        <g key={angle} transform={`rotate(${angle} 200 200)`}>
+          <rect
+            x="182"
+            y="6"
+            width="36"
+            height="26"
+            rx="5"
+            fill="currentColor"
+            fillOpacity="0.12"
+            stroke="currentColor"
+            strokeOpacity="0.45"
+            strokeWidth="0.8"
+          />
+          <rect x="186" y="10" width="28" height="5" rx="2" fill="#F45A0A" fillOpacity="0.18" />
+        </g>
+      ))}
+
+      {/* gear body rings */}
+      <circle cx="200" cy="200" r="176" fill="rgba(255,255,255,0.02)" stroke="url(#gear-accent)" strokeWidth="1.2" />
+      <circle cx="200" cy="200" r="164" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.35" />
+      <circle cx="200" cy="200" r="142" stroke="currentColor" strokeWidth="0.7" strokeDasharray="6 8" strokeOpacity="0.4" />
+      <circle cx="200" cy="200" r="110" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.35" />
+
+      {/* inner gear notches */}
+      {innerNotches.map((angle) => (
         <line
-          key={angle}
+          key={`notch-${angle}`}
           x1="200"
-          y1="12"
+          y1="86"
           x2="200"
-          y2="44"
+          y2={angle % 30 === 0 ? '104' : '96'}
           stroke="currentColor"
-          strokeWidth="1"
+          strokeWidth={angle % 30 === 0 ? '1.1' : '0.5'}
+          strokeOpacity={angle % 30 === 0 ? '0.45' : '0.25'}
+          strokeLinecap="round"
           transform={`rotate(${angle} 200 200)`}
         />
       ))}
 
-      {radialLines.map((angle) => (
-        <line
-          key={`soft-${angle}`}
-          x1="200"
-          y1="60"
-          x2="200"
-          y2="78"
-          stroke="currentColor"
-          strokeWidth="0.5"
-          strokeOpacity="0.6"
-          transform={`rotate(${angle + 15} 200 200)`}
-        />
+      {/* hub spokes */}
+      {[0, 60, 120, 180, 240, 300].map((angle) => (
+        <g key={`spoke-${angle}`} transform={`rotate(${angle} 200 200)`}>
+          <line x1="200" y1="112" x2="200" y2="148" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
+          <circle cx="200" cy="122" r="3" fill="#0785D6" fillOpacity="0.45" />
+        </g>
       ))}
 
+      {/* accent arcs */}
       <path
-        d="M200 4a196 196 0 0 1 140 58"
+        d="M200 24a176 176 0 0 1 124 52"
         stroke="#F45A0A"
-        strokeWidth="2"
-        strokeOpacity="0.75"
+        strokeWidth="2.2"
+        strokeOpacity="0.7"
         strokeLinecap="round"
       />
       <path
-        d="M200 396a196 196 0 0 1-140-58"
+        d="M200 376a176 176 0 0 1-124-52"
         stroke="#0785D6"
-        strokeWidth="2"
-        strokeOpacity="0.75"
+        strokeWidth="2.2"
+        strokeOpacity="0.7"
         strokeLinecap="round"
       />
     </svg>
@@ -96,7 +123,7 @@ export default function ServiceWheel({ services, activeIndex, onSelect }) {
   return (
     <div
       className="wheel relative mx-auto aspect-square"
-      style={{ '--wheel-size': 'min(84vw, 34rem)', width: 'min(84vw, 34rem)' }}
+      style={{ '--wheel-size': 'min(76vw, 27rem)', width: 'min(76vw, 27rem)' }}
     >
       <div className="wheel__ring absolute inset-0">
         <DecorativeRings />
