@@ -161,80 +161,132 @@ export default function ServicesWheelSection() {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="relative border border-white/12 bg-navy-deep/70 p-5 backdrop-blur-sm sm:p-6">
-              <div className="flex items-center justify-between gap-4 border-b border-white/12 pb-4">
-                <span className={`border px-3 py-1.5 font-display text-[0.6rem] font-semibold uppercase tracking-[0.18em] ${tone.className}`}>
-                  {tone.label}
-                </span>
-                <span className="font-display text-[0.7rem] tracking-[0.2em] text-white/45">
-                  {String(activeIndex + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}
-                </span>
-              </div>
+            <div className="relative overflow-hidden border border-white/12 bg-navy-deep/80 shadow-[0_30px_70px_-45px_rgba(0,0,0,0.9)] backdrop-blur-sm">
+              <span
+                aria-hidden="true"
+                className={`absolute inset-x-0 top-0 h-[3px] ${
+                  active.tone === 'heating'
+                    ? 'bg-gradient-to-r from-iso-orange via-iso-orange/70 to-transparent'
+                    : active.tone === 'cooling'
+                      ? 'bg-gradient-to-r from-iso-blue via-iso-blue/70 to-transparent'
+                      : 'bg-gradient-to-r from-white/70 via-white/30 to-transparent'
+                }`}
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/[0.03] blur-2xl"
+              />
 
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active.id}
-                  initial={reduced ? false : { opacity: 0, y: 18 }}
+                  initial={reduced ? false : { opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={reduced ? undefined : { opacity: 0, y: -12 }}
-                  transition={{ duration: reduced ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  exit={reduced ? undefined : { opacity: 0, y: -10 }}
+                  transition={{ duration: reduced ? 0 : 0.38, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative"
                 >
-                  <div className="pt-4">
-                    <h3 className="max-w-[16ch] text-[clamp(1.45rem,2.6vw,2rem)] font-bold leading-[1.05] text-white">
-                      {active.label}
-                    </h3>
-                    <p className="mt-3 text-[0.92rem] leading-relaxed text-white/65">
-                      {active.summary}
-                    </p>
-                  </div>
-
-                  <figure className="mt-4 overflow-hidden">
+                  <figure className="relative">
                     <img
-                      key={CATEGORY_IMAGES[active.image]}
                       src={CATEGORY_IMAGES[active.image] || roofImage}
                       alt={CATEGORY_ALT[active.image] || 'HVAC equipment'}
                       width={1000}
                       height={625}
                       loading="lazy"
                       decoding="async"
-                      className="h-32 w-full object-cover sm:h-36"
+                      className="h-36 w-full object-cover sm:h-40"
                     />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/25 to-transparent"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
+                      <span
+                        className={`inline-flex items-center gap-2 border border-white/15 bg-navy-deep/70 px-2.5 py-1.5 font-display text-[0.58rem] font-semibold uppercase tracking-[0.16em] backdrop-blur-sm ${tone.className}`}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={`h-1.5 w-1.5 rounded-full ${
+                            active.tone === 'heating'
+                              ? 'bg-iso-orange'
+                              : active.tone === 'cooling'
+                                ? 'bg-iso-blue'
+                                : 'bg-white'
+                          }`}
+                        />
+                        {tone.label}
+                      </span>
+                      <span className="rounded-full border border-white/15 bg-navy-deep/60 px-2.5 py-1 font-display text-[0.58rem] font-semibold tracking-[0.14em] text-white/75 backdrop-blur-sm">
+                        {String(activeIndex + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}
+                      </span>
+                    </div>
                   </figure>
 
-                  <div className="mt-4 flex flex-wrap items-center gap-3">
-                    <Button href="/contact-us" variant="primary">
-                      Schedule this service
-                    </Button>
-                    {!active.verified && (
-                      <span className="text-[0.66rem] uppercase tracking-[0.16em] text-white/40">
-                        Category pending confirmation
+                  <div className="p-5 text-center sm:p-6">
+                    <div className="flex items-center justify-center gap-3">
+                      <span className="h-px w-6 bg-iso-orange/70" aria-hidden="true" />
+                      <span className="font-display text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-white/40">
+                        Selected service
                       </span>
-                    )}
+                      <span className="h-px w-6 bg-iso-orange/70" aria-hidden="true" />
+                    </div>
+
+                    <h3 className="mx-auto mt-3 max-w-[18ch] text-[clamp(1.45rem,2.5vw,2rem)] font-bold leading-[1.06] tracking-tight text-white">
+                      {active.label}
+                    </h3>
+                    <p className="mx-auto mt-3 max-w-[34ch] text-[0.92rem] leading-[1.75] text-white/65">
+                      {active.summary}
+                    </p>
+
+                    <div className="mx-auto mt-4 max-w-[18rem]" aria-hidden="true">
+                      <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
+                        <div
+                          className={`h-full rounded-full transition-all duration-500 ${
+                            active.tone === 'heating'
+                              ? 'bg-iso-orange'
+                              : active.tone === 'cooling'
+                                ? 'bg-iso-blue'
+                                : 'bg-white/70'
+                          }`}
+                          style={{ width: `${((activeIndex + 1) / services.length) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-5 flex justify-center">
+                      <Button
+                        href="/contact-us"
+                        variant="primary"
+                        className="rounded-full border border-white/10 px-6 py-3 shadow-[0_18px_36px_-16px_rgba(244,90,10,0.85)] ring-1 ring-inset ring-white/10 transition hover:shadow-[0_22px_42px_-16px_rgba(244,90,10,0.95)]"
+                      >
+                        Schedule this service
+                      </Button>
+                    </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
 
-              <div className="mt-5 flex items-center justify-between border-t border-white/12 pt-4">
+              <div className="flex items-center justify-between border-t border-white/10 bg-white/[0.02] px-4 py-3 sm:px-5">
                 <button
                   type="button"
                   onClick={() => go(activeIndex - 1)}
-                  className="group flex items-center gap-2 font-display text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-white/55 transition hover:text-white"
+                  className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 font-display text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-white/60 transition hover:border-white/25 hover:bg-white/[0.06] hover:text-white"
                 >
-                  <ChevronLeft className="h-4 w-4 transition group-hover:-translate-x-1" aria-hidden="true" />
+                  <ChevronLeft className="h-3.5 w-3.5 transition group-hover:-translate-x-0.5" aria-hidden="true" />
                   Previous
                 </button>
 
-                <span className="hidden text-[0.6rem] uppercase tracking-[0.2em] text-white/30 xs:block">
+                <span className="hidden text-[0.56rem] uppercase tracking-[0.18em] text-white/30 sm:block">
                   Use arrow keys
                 </span>
 
                 <button
                   type="button"
                   onClick={() => go(activeIndex + 1)}
-                  className="group flex items-center gap-2 font-display text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-white/55 transition hover:text-white"
+                  className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 font-display text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-white/60 transition hover:border-white/25 hover:bg-white/[0.06] hover:text-white"
                 >
                   Next
-                  <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
+                  <ChevronRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden="true" />
                 </button>
               </div>
             </div>

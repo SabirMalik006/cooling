@@ -2,92 +2,118 @@ import { useRef } from 'react';
 import { getIcon } from './iconRegistry';
 
 const TONE = {
-  cooling: { text: 'text-iso-blue', bg: 'bg-iso-blue', border: 'border-iso-blue' },
-  heating: { text: 'text-iso-orange', bg: 'bg-iso-orange', border: 'border-iso-orange' },
-  systems: { text: 'text-white', bg: 'bg-white', border: 'border-white' },
+  cooling: {
+    text: 'text-iso-blue',
+    bg: 'bg-iso-blue',
+    border: 'border-iso-blue',
+    halo: 'shadow-[0_0_0_6px_rgba(7,133,214,0.16),0_18px_38px_-16px_rgba(0,0,0,0.9)]',
+  },
+  heating: {
+    text: 'text-iso-orange',
+    bg: 'bg-iso-orange',
+    border: 'border-iso-orange',
+    halo: 'shadow-[0_0_0_6px_rgba(244,90,10,0.16),0_18px_38px_-16px_rgba(0,0,0,0.9)]',
+  },
+  systems: {
+    text: 'text-white',
+    bg: 'bg-white',
+    border: 'border-white',
+    halo: 'shadow-[0_0_0_6px_rgba(255,255,255,0.12),0_18px_38px_-16px_rgba(0,0,0,0.9)]',
+  },
 };
 
-function DecorativeRings() {
-  const teeth = Array.from({ length: 12 }, (_, index) => index * 30);
-  const innerNotches = Array.from({ length: 24 }, (_, index) => index * 15);
+const MARKER_TRACK = 160;
+
+function DialFace() {
+  const steps = Array.from({ length: 12 }, (_, index) => index * 30);
+  const knurl = Array.from({ length: 72 }, (_, index) => index * 5);
 
   return (
     <svg
       aria-hidden="true"
-      className="absolute inset-0 h-full w-full text-white/25"
+      className="absolute inset-0 h-full w-full"
       viewBox="0 0 400 400"
       fill="none"
     >
       <defs>
-        <linearGradient id="gear-accent" x1="40" y1="40" x2="360" y2="360" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#0785D6" stopOpacity="0.55" />
-          <stop offset="50%" stopColor="#ffffff" stopOpacity="0.08" />
-          <stop offset="100%" stopColor="#F45A0A" stopOpacity="0.55" />
+        <radialGradient id="dial-face" cx="50%" cy="38%" r="72%">
+          <stop offset="0%" stopColor="#1B3466" stopOpacity="0.85" />
+          <stop offset="62%" stopColor="#102344" stopOpacity="0.78" />
+          <stop offset="100%" stopColor="#071426" stopOpacity="0.92" />
+        </radialGradient>
+        <linearGradient id="dial-rim" x1="30" y1="10" x2="370" y2="390">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.32" />
+          <stop offset="45%" stopColor="#FFFFFF" stopOpacity="0.06" />
+          <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.22" />
+        </linearGradient>
+        <linearGradient id="dial-accent" x1="60" y1="20" x2="340" y2="380">
+          <stop offset="0%" stopColor="#0785D6" stopOpacity="0.75" />
+          <stop offset="50%" stopColor="#F45A0A" stopOpacity="0.65" />
+          <stop offset="100%" stopColor="#0785D6" stopOpacity="0.55" />
         </linearGradient>
       </defs>
 
-      {/* gear teeth */}
-      {teeth.map((angle) => (
-        <g key={angle} transform={`rotate(${angle} 200 200)`}>
-          <rect
-            x="182"
-            y="6"
-            width="36"
-            height="26"
-            rx="5"
-            fill="currentColor"
-            fillOpacity="0.12"
-            stroke="currentColor"
-            strokeOpacity="0.45"
-            strokeWidth="0.8"
-          />
-          <rect x="186" y="10" width="28" height="5" rx="2" fill="#F45A0A" fillOpacity="0.18" />
-        </g>
-      ))}
+      {/* knob body */}
+      <circle cx="200" cy="200" r="197" fill="url(#dial-face)" stroke="url(#dial-rim)" strokeWidth="1.6" />
+      <circle cx="200" cy="200" r="188" stroke="#FFFFFF" strokeOpacity="0.08" strokeWidth="1" />
 
-      {/* gear body rings */}
-      <circle cx="200" cy="200" r="176" fill="rgba(255,255,255,0.02)" stroke="url(#gear-accent)" strokeWidth="1.2" />
-      <circle cx="200" cy="200" r="164" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.35" />
-      <circle cx="200" cy="200" r="142" stroke="currentColor" strokeWidth="0.7" strokeDasharray="6 8" strokeOpacity="0.4" />
-      <circle cx="200" cy="200" r="110" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.35" />
-
-      {/* inner gear notches */}
-      {innerNotches.map((angle) => (
+      {/* knurled grip */}
+      {knurl.map((angle) => (
         <line
-          key={`notch-${angle}`}
+          key={`knurl-${angle}`}
           x1="200"
-          y1="86"
+          y1="10"
           x2="200"
-          y2={angle % 30 === 0 ? '104' : '96'}
-          stroke="currentColor"
-          strokeWidth={angle % 30 === 0 ? '1.1' : '0.5'}
-          strokeOpacity={angle % 30 === 0 ? '0.45' : '0.25'}
+          y2={angle % 30 === 0 ? '22' : angle % 15 === 0 ? '18' : '15'}
+          stroke="#FFFFFF"
+          strokeOpacity={angle % 30 === 0 ? '0.34' : angle % 15 === 0 ? '0.2' : '0.12'}
+          strokeWidth={angle % 30 === 0 ? '1.4' : '1'}
           strokeLinecap="round"
           transform={`rotate(${angle} 200 200)`}
         />
       ))}
 
-      {/* hub spokes */}
-      {[0, 60, 120, 180, 240, 300].map((angle) => (
-        <g key={`spoke-${angle}`} transform={`rotate(${angle} 200 200)`}>
-          <line x1="200" y1="112" x2="200" y2="148" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
-          <circle cx="200" cy="122" r="3" fill="#0785D6" fillOpacity="0.45" />
+      {/* step markers aligned to the twelve services */}
+      {steps.map((angle) => (
+        <g key={`step-${angle}`} transform={`rotate(${angle} 200 200)`}>
+          <line
+            x1="200"
+            y1="30"
+            x2="200"
+            y2="56"
+            stroke="#FFFFFF"
+            strokeOpacity="0.32"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+          />
+          <circle cx="200" cy="62" r="1.9" fill="#F45A0A" fillOpacity="0.55" />
         </g>
       ))}
 
-      {/* accent arcs */}
+      {/* selector track + face rings */}
+      <circle
+        cx="200"
+        cy={200}
+        r={MARKER_TRACK}
+        stroke="#FFFFFF"
+        strokeOpacity="0.1"
+        strokeWidth="1"
+        strokeDasharray="2 7"
+      />
+      <circle cx="200" cy="200" r="138" stroke="#FFFFFF" strokeOpacity="0.08" strokeWidth="1" />
+      <circle cx="200" cy="200" r="112" stroke="#FFFFFF" strokeOpacity="0.06" strokeWidth="1" />
+
+      {/* accent arc */}
       <path
-        d="M200 24a176 176 0 0 1 124 52"
-        stroke="#F45A0A"
-        strokeWidth="2.2"
-        strokeOpacity="0.7"
+        d="M200 14a186 186 0 0 1 108 34"
+        stroke="url(#dial-accent)"
+        strokeWidth="3"
         strokeLinecap="round"
       />
       <path
-        d="M200 376a176 176 0 0 1-124-52"
-        stroke="#0785D6"
-        strokeWidth="2.2"
-        strokeOpacity="0.7"
+        d="M200 386a186 186 0 0 1-108-34"
+        stroke="url(#dial-accent)"
+        strokeWidth="3"
         strokeLinecap="round"
       />
     </svg>
@@ -123,10 +149,10 @@ export default function ServiceWheel({ services, activeIndex, onSelect }) {
   return (
     <div
       className="wheel relative mx-auto aspect-square"
-      style={{ '--wheel-size': 'min(76vw, 27rem)', width: 'min(76vw, 27rem)' }}
+      style={{ '--wheel-size': 'min(80vw, 28rem)', width: 'min(80vw, 28rem)' }}
     >
       <div className="wheel__ring absolute inset-0">
-        <DecorativeRings />
+        <DialFace />
 
         <ol
           ref={listRef}
@@ -145,7 +171,7 @@ export default function ServiceWheel({ services, activeIndex, onSelect }) {
                 key={service.id}
                 className="absolute left-1/2 top-1/2 h-0 w-0"
                 style={{
-                  transform: `rotate(${angle}deg) translateY(calc(var(--wheel-size) * -0.4)) rotate(${-angle}deg)`,
+                  transform: `rotate(${angle}deg) translateY(calc(var(--wheel-size) * -0.372)) rotate(${-angle}deg)`,
                 }}
               >
                 <div className="wheel__marker-inner flex flex-col items-center gap-2">
@@ -157,26 +183,26 @@ export default function ServiceWheel({ services, activeIndex, onSelect }) {
                     onClick={() => onSelect(index)}
                     title={service.label}
                     className={[
-                      'wheel__marker-btn grid h-12 w-12 place-items-center rounded-full border backdrop-blur-sm sm:h-16 sm:w-16',
+                      'wheel__marker-btn grid h-11 w-11 place-items-center rounded-full border backdrop-blur-sm sm:h-14 sm:w-14',
                       isActive
-                        ? `${tone.bg} border-transparent text-navy shadow-[0_16px_40px_-18px_rgba(0,0,0,0.9)]`
-                        : 'border-white/25 bg-navy-ink/70 text-white/70 hover:border-white/60 hover:text-white',
+                        ? `${tone.bg} border-transparent text-navy ${tone.halo}`
+                        : 'border-white/20 bg-navy-ink/80 text-white/65 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_10px_22px_-16px_rgba(0,0,0,0.9)] hover:border-white/55 hover:text-white',
                       isActive && service.tone === 'systems' ? 'text-navy' : '',
                     ].join(' ')}
                   >
                     <Icon
-                      className={`h-5 w-5 sm:h-[1.35rem] sm:w-[1.35rem] ${
+                      className={`h-[1.1rem] w-[1.1rem] sm:h-5 sm:w-5 ${
                         isActive && service.tone === 'systems' ? 'text-navy' : ''
                       }`}
-                      strokeWidth={1.6}
+                      strokeWidth={1.7}
                       aria-hidden="true"
                     />
                     <span className="sr-only">{service.label}</span>
                   </button>
 
                   <span
-                    className={`wheel__label hidden w-[5.8rem] text-center font-display text-[0.54rem] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors duration-300 sm:block ${
-                      isActive ? 'text-white' : 'text-white/45'
+                    className={`wheel__label hidden w-[4.9rem] text-center font-display text-[0.49rem] font-semibold uppercase leading-tight tracking-[0.05em] transition-colors duration-300 sm:block ${
+                      isActive ? 'text-white' : 'text-white/40'
                     }`}
                   >
                     {service.shortLabel}
@@ -188,17 +214,40 @@ export default function ServiceWheel({ services, activeIndex, onSelect }) {
         </ol>
       </div>
 
-      {/* upright hub */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 grid h-[calc(var(--wheel-size)*0.44)] w-[calc(var(--wheel-size)*0.44)] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-navy-ink/80 text-center backdrop-blur-sm">
-        <div className="px-4">
-          <p className={`font-display text-[0.6rem] font-semibold uppercase tracking-wide2 ${activeTone.text}`}>
+      {/* upright hub — reads like the centre of a physical selector knob */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 grid h-[calc(var(--wheel-size)*0.46)] w-[calc(var(--wheel-size)*0.46)] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-navy-ink/90 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-20px_40px_-20px_rgba(0,0,0,0.9),0_24px_60px_-30px_rgba(0,0,0,0.95)] backdrop-blur-sm">
+        <span
+          aria-hidden="true"
+          className="absolute inset-[7px] rounded-full border border-white/12"
+        />
+        <span
+          aria-hidden="true"
+          className="absolute inset-[13px] rounded-full border border-dashed border-white/[0.07]"
+        />
+        <span
+          aria-hidden="true"
+          className={`absolute left-1/2 top-[5px] h-2 w-2 -translate-x-1/2 rotate-45 rounded-[1px] ${
+            active?.tone === 'heating'
+              ? 'bg-iso-orange'
+              : active?.tone === 'cooling'
+                ? 'bg-iso-blue'
+                : 'bg-white'
+          }`}
+        />
+
+        <div className="relative px-4">
+          <p className={`font-display text-[0.56rem] font-semibold uppercase tracking-[0.2em] ${activeTone.text}`}>
             {active?.tone === 'cooling' ? 'Cooling' : active?.tone === 'heating' ? 'Heating' : 'Systems'}
           </p>
-          <p className="mt-1 font-display text-[clamp(2rem,4vw,3.2rem)] font-extrabold leading-none text-white">
+          <p className="mt-1.5 font-display text-[clamp(1.9rem,3.6vw,2.9rem)] font-extrabold leading-none tracking-tight text-white">
             {String(activeIndex + 1).padStart(2, '0')}
           </p>
-          <span className="mx-auto mt-2 block h-px w-10 bg-white/25" aria-hidden="true" />
-          <p className="mt-2 font-display text-[0.58rem] uppercase tracking-[0.18em] text-white/50">
+          <span className="mx-auto mt-2 flex items-center justify-center gap-1.5" aria-hidden="true">
+            <span className="h-px w-4 bg-white/20" />
+            <span className="h-1 w-1 rounded-full bg-iso-orange/80" />
+            <span className="h-px w-4 bg-white/20" />
+          </span>
+          <p className="mt-1.5 font-display text-[0.54rem] uppercase tracking-[0.2em] text-white/45">
             of {String(count).padStart(2, '0')}
           </p>
         </div>
